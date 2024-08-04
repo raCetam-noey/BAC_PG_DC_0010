@@ -1,0 +1,262 @@
+<mvc:View 
+    id="pgdc0010.uploadedfsitemmappingview" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns:smartTable="sap.ui.comp.smarttable" 
+    xmlns:core="sap.ui.core" 
+    xmlns:unified="sap.ui.unified" 
+    xmlns:table="sap.ui.table" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:plugins="sap.ui.table.plugins" 
+    xmlns="sap.m" 
+    controllerName="pgdc0010.controller.ExcelUploadMap">
+
+      <Panel id="contentPanel">
+            <dependents>
+                <core:CommandExecution id="pgdc0010.uploadedfsitemmappingview.DeleteCommand" 
+                    command="Delete" 
+                    enabled="{ui>/deleteBtnEnabled}" 
+                    execute=".onToolbarDeletePress"/>
+            </dependents>
+            <smartTable:SmartTable 
+                id="pgdc0010.fsi.smartTable" 
+                class="sapFioriListReportTable sapUiMediumMarginBeginEnd" 
+                header="{i18n>Items} ({oLayout>/tableCnt}) "
+                height="100%" 
+                tableType="Table" 
+                showRowCount="false" 
+                showFullScreenButton="true" 
+                useExportToExcel="false" 
+                useTablePersonalisation="true" 
+                showTablePersonalisation="false" 
+                useVariantManagement="false" 
+                enableAutoBinding="true" 
+                enableAutoColumnWidth="true" 
+                beforeRebindTable="onBeforeRebindFsiTable" 
+                entitySet="UploadedTemplateEntity" 
+                >
+                <smartTable:customToolbar>
+                    <OverflowToolbar 
+                        id="pgdc0010.fsi.overflowToolbar" 
+                        design="Transparent">
+                        <ToolbarSpacer id="overflowToolbarSpacer"/>
+                        <Button 
+                            id="pgdc0010.fsi.btn.refresh" 
+                            enabled="true" 
+                            press="onToolbarRefreshPress" 
+                            text="{i18n>RefreshButtonText}" 
+                            tooltip="{i18n>RefreshButtonText}"/>
+                        <Button 
+                            id="pgdc0010.fsi.btn.check" 
+                            enabled="{ui>/checkBtnEnabled}" 
+                            press="onToolbarCheckPress" 
+                            text="{i18n>CheckButtonText}" 
+                            tooltip="{i18n>CheckButtonText}"/>
+                        <Button 
+                            id="pgdc0010.fsi.btn.delete" 
+                            enabled="{ui>/deleteBtnEnabled}" 
+                            press="cmd:Delete" 
+                            text="{i18n>DeleteButtonText}" 
+                            tooltip="{i18n>DeleteButtonText}"/>
+                        <Button 
+                            id="pgdc0010.fsi.btn.showlog" 
+                            enabled="{ui>/showlogBtnEnabled}" 
+                            press="onToolbarShowLogPress" 
+                            text="{i18n>LogButtonText}" 
+                            tooltip="{i18n>LogButtonText}"/>
+                    </OverflowToolbar>
+                </smartTable:customToolbar>
+                <table:Table id="pgdc0010.fsi.table" 
+                    visibleRowCountMode="Auto" 
+                    selectionBehavior="Row"
+                    rows="{
+                        path:'excelUploadEntity>/'
+                    }"
+                    rowsUpdated="onRowsUpdated" 
+                    enableColumnReordering="true" 
+                    enableCustomFilter="true" 
+                    enableCellFilter="true" 
+                    threshold="2000" 
+                    width="100%" 
+                    rowActionCount="1" 
+                    minAutoRowCount="20">
+                    <table:plugins>
+                        <plugins:MultiSelectionPlugin 
+                            id="tableSelectionPlugin" 
+                            selectionChange="onRowSelectionChange" 
+                            limit="0" 
+                            enableNotification="false"/>
+                    </table:plugins>
+                      
+                    <table:rowSettingsTemplate>
+                        <table:RowSettings id="rowSettings" 
+                            highlight="{path:'GrStatus'}"/>
+                    </table:rowSettingsTemplate>
+                    <table:columns>
+                        <table:Column hAlign="Begin" 
+                            id="pgdc0010.fsi.ConsolidationCOA" 
+                            width="10rem" 
+                            visible="true" 
+                            filterProperty="CnsldtnCOA" 
+                            sortProperty="CnsldtnCOA">
+                            <Label id="pgdc0010.fsi.CnsldtnCOA.label" 
+                                text="{i18n>ConsCoALabelText}"/>
+                            <table:template>
+                                <ObjectStatus id="ConsolidationChartOfAccounts" 
+                                    text="{excelUploadEntity>CnsldtnCOA}" />
+                            </table:template>
+                            <table:customData>
+                                <core:CustomData key="p13nData" 
+                                    value="\{'columnKey': 'CnsldtnCOA', 'leadingProperty': 'CnsldtnCOA', 'type': 'string', 'columnIndex': '1'}"/>
+                            </table:customData>
+                        </table:Column>
+                        <table:Column hAlign="Begin" 
+                            id="pgdc0010.fsi.CnsldtnUnit" 
+                            width="10rem" 
+                            visible="true" 
+                            filterProperty="CnsldtnUnit" 
+                            sortProperty="CnsldtnUnit">
+                            <Label id="pgdc0010.fsi.CnsldtnUnit.label" 
+                                text="{i18n>ConsUnitLabelText}"/>
+                            <table:template>
+                                <Text id="CnsldtnUnit" 
+                                    text="{excelUploadEntity>CnsldtnUnit}"
+                                    wrapping="false"/>
+                            </table:template>
+                            <table:customData>
+                                <core:CustomData key="p13nData" 
+                                    value="\{'columnKey': 'CnsldtnUnit', 'leadingProperty': 'CnsldtnUnit', 'type': 'string', 'columnIndex': '2'}"/>
+                            </table:customData>
+                        </table:Column>
+                        <table:Column hAlign="Begin" 
+                            id="pgdc0010.fsi.FSItemMappingId" 
+                            width="10rem" 
+                            visible="true" 
+                            filterProperty="MappingID" 
+                            sortProperty="MappingID">
+                            <Label id="pgdc0010.fsi.FSItemMappingId.label" 
+                                text="{i18n>MappingIdLabelText}"/>
+                            <table:template>
+                                <Text id="FSItemMappingId" 
+                                    text="{excelUploadEntity>MappingID}" 
+                                    wrapping="false"/>
+                            </table:template>
+                            <table:customData>
+                                <core:CustomData key="p13nData" 
+                                    value="\{'columnKey': 'MappingID', 'leadingProperty': 'MappingID', 'type': 'string', 'columnIndex': '3'}"/>
+                            </table:customData>
+                        </table:Column>
+                        <table:Column hAlign="Begin" 
+                            id="pgdc0010.fsi.FSItemMappingRevision" 
+                            width="5rem" 
+                            visible="true" 
+                            filterProperty="FSItemMappingRevision" 
+                            sortProperty="FSItemMappingRevision">
+                            <Label id="pgdc0010.fsi.FSItemMappingRevision.label" 
+                                text="{i18n>MappingRevisionLabelText}"/>
+                            <table:template>
+                                <Text id="FSItemMappingRevision" 
+                                    text="{excelUploadEntity>Revision}"
+                                    wrapping="false"/>
+                            </table:template>
+                            <table:customData>
+                                <core:CustomData key="p13nData" 
+                                    value="\{'columnKey': 'Revision', 'leadingProperty': 'Revision', 'type': 'string', 'columnIndex': '4'}"/>
+                            </table:customData>
+                        </table:Column>
+                         <table:Column hAlign="Begin" 
+                            id="pgdc0010.fsi.GLAccount" 
+                            width="10rem" 
+                            visible="true" 
+                            filterProperty="GLAccount" 
+                            sortProperty="GLAccount">
+                            <Label id="pgdc0010.fsi.GLAccount.label" 
+                                text="{i18n>GLAccount}"/>
+                            <table:template>
+                                <Text id="GLAccount" 
+                                    text="{excelUploadEntity>GLAccount}"
+                                    wrapping="false"/>
+                            </table:template>
+                            <table:customData>
+                                <core:CustomData key="p13nData" 
+                                    value="\{'columnKey': 'GLAccount', 'leadingProperty': 'GLAccount', 'type': 'string', 'columnIndex': '5'}"/>
+                            </table:customData>
+                        </table:Column>
+                        <table:Column hAlign="Begin" 
+                            id="pgdc0010.fsi.GLAccountLocalText" 
+                            width="15rem" 
+                            visible="true" 
+                            filterProperty="GLAccountLocalText" 
+                            sortProperty="GLAccountLocalText">
+                            <Label id="pgdc0010.fsi.GLAccountLocalText.label" 
+                                text="{i18n>GLAccountLocalText}"/>
+                            <table:template>
+                                <Text id="GLAccountLocalText" 
+                                    text="{excelUploadEntity>GLAccountLocalText}"
+                                    wrapping="false"/>
+                            </table:template>
+                            <table:customData>
+                                <core:CustomData key="p13nData" 
+                                    value="\{'columnKey': 'GLAccountLocalText', 'leadingProperty': 'GLAccountLocalText', 'type': 'string', 'columnIndex': '6'}"/>
+                            </table:customData>
+                        </table:Column>
+                        <table:Column hAlign="Begin" 
+                            id="pgdc0010.fsi.GLAccountGroupText" 
+                            width="15rem" 
+                            visible="true" 
+                            filterProperty="GLAccountGroupText" 
+                            sortProperty="GLAccountGroupText">
+                            <Label id="pgdc0010.fsi.GLAccountGroupText.label" 
+                                text="{i18n>GLAccountGroupText}"/>
+                            <table:template>
+                                <Text id="GLAccountGroupText" 
+                                    text="{excelUploadEntity>GLAccountGroupText}"
+                                    wrapping="false"/>
+                            </table:template>
+                            <table:customData>
+                                <core:CustomData key="p13nData" 
+                                    value="\{'columnKey': 'GLAccountGroupText', 'leadingProperty': 'GLAccountGroupText', 'type': 'string', 'columnIndex': '7'}"/>
+                            </table:customData>
+                        </table:Column>
+                        <table:Column hAlign="Begin" 
+                            id="pgdc0010.fsi.CnsldtnFSItem" 
+                            width="10rem" 
+                            visible="true" 
+                            filterProperty="CnsldtnFSItem" 
+                            sortProperty="CnsldtnFSItem">
+                            <Label id="pgdc0010.fsi.CnsldtnFSItem.label" 
+                                text="{i18n>FSItemLabelText}"/>
+                            <table:template>
+                                <Text id="CnsldtnFSItem" 
+                                    text="{excelUploadEntity>CnsldtnFSItem}"
+                                    wrapping="false"/>
+                            </table:template>
+                            <table:customData>
+                                <core:CustomData key="p13nData" 
+                                    value="\{'columnKey': 'CnsldtnFSItem', 'leadingProperty': 'CnsldtnFSItem', 'type': 'string', 'columnIndex': '8'}"/>
+                            </table:customData>
+                        </table:Column>
+                       
+                        <table:Column hAlign="Begin" 
+                            id="pgdc0010.fsi.CnsldtnFSItemMediumText" 
+                            width="15rem" 
+                            visible="true" 
+                            filterProperty="CnsldtnFSItemMediumText" 
+                            sortProperty="CnsldtnFSItemMediumText">
+                            <Label id="pgdc0010.fsi.CnsldtnFSItemMediumText.label" 
+                                text="{i18n>FSItemMappingIdMediumText}"/>
+                            <table:template>
+                                <Text id="CnsldtnFSItemMediumText" 
+                                    text="{excelUploadEntity>CnsldtnFSItemMediumText}"
+                                    wrapping="false"/>
+                            </table:template>
+                            <table:customData>
+                                <core:CustomData key="p13nData" 
+                                    value="\{'columnKey': 'CnsldtnFSItemMediumText', 'leadingProperty': 'CnsldtnFSItemMediumText', 'type': 'string', 'columnIndex': '9'}"/>
+                            </table:customData>
+                        </table:Column>
+                        
+                    </table:columns>
+            </table:Table>
+        </smartTable:SmartTable>
+    </Panel>
+</mvc:View>

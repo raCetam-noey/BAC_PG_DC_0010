@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "3.1"
+metadata:
+  name: pgdc0010
+type: application
+builder:
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+  customTasks:
+    - name: deploy-to-abap
+      afterTask: generateCachebusterInfo
+      configuration:
+        target:
+          destination: ZAM_DEV_SAML_ASSERTION
+          url: https://my407000-api.s4hana.cloud.sap
+        app:
+          name: YUI5_PG_DC_0010
+          description: ""
+          package: YASGR
+          transport: ZAMK900463
+        exclude:
+          - /test/

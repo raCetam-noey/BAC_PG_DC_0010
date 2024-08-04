@@ -1,0 +1,137 @@
+<core:FragmentDefinition 
+    id="pgdc0010.view.fragment.EditDialog"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified"
+    xmlns:smartForm="sap.ui.comp.smartform"
+    xmlns:smartField="sap.ui.comp.smartfield">
+
+    <Dialog 
+        id="pgdc0010.edit.dialog" 
+        title="{ui>/EditDialogTitle}" 
+        draggable="false" 
+        beforeOpen="onBeforeEditDialogOpen" 
+        contentWidth="430px" 
+        contentHeight="auto">
+        
+        <content>
+            <smartForm:SmartForm 
+                id="downloadParametersForm" 
+                editable="true" 
+                editTogglable="false">
+                
+                <smartForm:Group id="downloadParametersGroup">
+                    
+                    <smartForm:GroupElement 
+                        id="FiscalYearPeriodGroupElement" 
+                        label="{/#GRVCOA03Type/FiscalYearPeriod/@sap:label}"
+                        >
+                        <smartField:SmartField 
+                            id="pgdc0010.FiscalYearPeriod" 
+                            entitySet="GRVCOA03" 
+                            editable="true" 
+                            mandatory="true"
+                            value="{FyearperiodTo}" 
+                            innerControlsCreated="attachChangeHandlerToInnerInputControl"/>
+                    </smartForm:GroupElement>
+                    
+                    <smartForm:GroupElement 
+                        id="ConsolidationVersionGroupElement" 
+                        label="{/#GRVCOA03Type/Fsmvs/@sap:label}">
+                        <Input 
+                            id="pgdc0010.ConsolidationVersion" 
+                            width="100%" 
+                            showValueHelp="true" 
+                            valueHelpRequest="handleConsolidationVersionVHOpen" 
+                            change="handleConsolidationVersionChange" 
+                            filterSuggests="false" 
+                            required="true" 
+                            editable="true" 
+                            value="{Fsmvs}"/>
+                    </smartForm:GroupElement>
+                    
+                    <smartForm:GroupElement 
+                        id="ConsolidationChartOfAccountsGroupElement" 
+                        label="{/#GRVCOA03Type/Ritclg/@sap:label}">
+                        <Input 
+                            id="pgdc0010.ConsolidationChartOfAccounts" 
+                            width="100%" 
+                            showValueHelp="true" 
+                            valueHelpRequest="handleConsolidationChartOfAccountsVHOpen" 
+                            change="handleConsolidationChartOfAccountsChange" 
+                            filterSuggests="false" 
+                            required="true" 
+                            editable="true" 
+                            value="{Ritclg}"/>
+                    </smartForm:GroupElement>
+                    
+                    <smartForm:GroupElement 
+                        id="ChartOfAccountsGroupElement" 
+                        label="{/#GRVCOA03Type/Rbunit/@sap:label}">
+                        <Input 
+                            id="pgdc0010.Rbunit" 
+                            width="100%" 
+                            showValueHelp="true" 
+                            valueHelpRequest="handleUnitVHOpen" 
+                            change="handleUnitChange" 
+                            filterSuggests="false" 
+                            required="true" 
+                            editable="true" 
+                            value="{Rbunit}"/>
+                    </smartForm:GroupElement>
+                    
+                    <smartForm:GroupElement 
+                        id="FSItemMappingIDGroupElement" 
+                        label="{/#GRVCOA03Type/MappingId/@sap:label}">
+                        <Input 
+                            id="pgdc0010.FSItemMappingID" 
+                            width="100%" 
+                            showValueHelp="true" 
+                            valueHelpRequest="handleFSItemMappingIDVHOpen" 
+                            change="handleFSItemMappingIDChange" 
+                            filterSuggests="false" 
+                            required="true" 
+                            editable="true" 
+                            value="{MappingId}"/>
+                    </smartForm:GroupElement>
+                    
+                    <smartForm:GroupElement 
+                        id="FSItemMappingRevisionGroupElement" 
+                        label="{/#GRVCOA03Type/Revision/@sap:label}">
+                        <Input 
+                            id="pgdc0010.FSItemMappingRevision" 
+                            width="100%" 
+                            showValueHelp="true" 
+                            valueHelpRequest="handleFSItemMappingRevisionVHOpen" 
+                            change="handleFSItemMappingRevisionChange" 
+                            filterSuggests="false" 
+                            required="true" 
+                            editable="true" 
+                            value="{Revision}"/>
+                    </smartForm:GroupElement>
+                    
+                </smartForm:Group>
+                
+            </smartForm:SmartForm>
+        </content>
+        
+        <beginButton>
+            <Button 
+                id="pgdc0010.button.save" 
+                text="{i18n>Save}" 
+                type="Emphasized" 
+                press="onSavePress"/>
+        </beginButton>
+        
+        <endButton>
+            <Button 
+                id="pgdc0010.button.Cancel" 
+                text="{i18n>Cancel}" 
+                press="onCancelPress"/>
+        </endButton>
+        
+    </Dialog>
+    
+</core:FragmentDefinition>

@@ -1,0 +1,149 @@
+<mvc:View id="pgdc0010.Main" 
+controllerName="pgdc0010.controller.Main" 
+xmlns="sap.m" 
+xmlns:mvc="sap.ui.core.mvc" 
+xmlns:l="sap.ui.layout" 
+xmlns:core="sap.ui.core" 
+xmlns:semantic="sap.m.semantic" 
+xmlns:f="sap.f" 
+xmlns:footerbar="sap.ushell.ui.footerbar" 
+xmlns:smartfilterbar="sap.ui.comp.smartfilterbar" 
+xmlns:smarttable="sap.ui.comp.smarttable" 
+xmlns:table="sap.ui.table" 
+xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
+xmlns:smartVariantManagement="sap.ui.comp.smartvariants" 
+xmlns:plugins="sap.ui.table.plugins" 
+xmlns:smartField="sap.ui.comp.smartfield" 
+height="100%">
+
+
+    <f:DynamicPage id="pgdc0010.worklist">
+        <f:dependents>
+            <core:CommandExecution id="pgdc0010.Worklist.EnterCommand" command="Enter" enabled="true" execute=".onSearch"/>
+            <core:CommandExecution id="pgdc0010.Worklist.DeleteCommand" command="Delete" enabled="{ui>/deleteBtnEnabled}" execute=".onToolbarDeletePress"/>
+        </f:dependents>
+        <f:title>
+            <f:DynamicPageTitle id="pageTitle">
+                <f:heading>
+                    <smartVariantManagement:SmartVariantManagement id="smartVariant" persistencyKey="pgdc0010.SmartVariant"/>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader id="pageHeader">
+                <f:content>
+                    <smartfilterbar:SmartFilterBar id="pgdc0010.Worklist.smartFilterBar" entitySet="GRVCOA02" persistencyKey="pgdc0010.Worklist.filter.variant" basicSearchFieldName="search" enableBasicSearch="false" considerSelectionVariants="true" showMessages="false" smartVariant="smartVariant" search="cmd:Enter" useToolbar="false">
+                        <smartfilterbar:controlConfiguration>
+                            <smartfilterbar:ControlConfiguration index="1" groupId="_BASIC" width="auto" id="pgdc0010.filter.glcoa" label="{/#GRVCOA02Type/Rbunit/@sap:label}" key="Rbunit"/>
+                            <smartfilterbar:ControlConfiguration index="2" groupId="_BASIC" width="auto" id="pgdc0010.filter.conscoa" label="{/#GRVCOA02Type/Ritclg/@sap:label}" key="Ritclg" />
+                            <smartfilterbar:ControlConfiguration index="3" groupId="_BASIC" width="auto" id="pgdc0010.filter.MappingId" label="{/#GRVCOA02Type/MappingId/@sap:label}" key="MappingId"/>
+                            <smartfilterbar:ControlConfiguration index="4" groupId="_BASIC" width="auto" id="pgdc0010.filter.revision" label="{/#GRVCOA02Type/Revision/@sap:label}" key="Revision"/>
+                        </smartfilterbar:controlConfiguration>
+                    </smartfilterbar:SmartFilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+            <f:content>
+                <VBox id="contentVBox" height="100%">
+                    <smarttable:SmartTable id="pgdc0010.worklist.smarttable" editable="false" smartFilterId="pgdc0010.Worklist.smartFilterBar" 
+                        customData:p13nDialogSettings="{filter:{visible:false}}" class="sapUiResponsiveMargin sapFioriListReportTable" height="100%" 
+                        header="{i18n>SMART_TABLE_HEADER}" tableType="Table" showRowCount="true" 
+                        showFullScreenButton="false" useTablePersonalisation="true" useVariantManagement="true" 
+                        enableAutoBinding="true" beforeRebindTable="onBeforeRebindSmartTable" afterVariantApply="onAfterApplyVariant" 
+                        persistencyKey="pgdc0010.filter.smarttable.variant" entitySet="GRVCOA02" enableAutoColumnWidth="true" 
+                        requestAtLeastFields="Uuid,Ritclg,Rbunit,MappingId,Revision,GrStatus" ignoredFields="Uuid,RevisionTextLo,RevisionTextGr" smartVariant="smartVariant">
+                        <smarttable:customToolbar>
+                        <OverflowToolbar id="pgdc0010.overflowToolbar" design="Transparent">
+                        <ToolbarSpacer id="overflowToolbarSpacer"/>
+                        <Button id="pgdc0010.button.refresh" enabled="{ui>/refreshEnabled}" press="onToolbarRefreshPress" text="{i18n>RefreshButtonText}" tooltip="{i18n>RefreshButtonText}"/>
+                        <Button id="pgdc0010.button.import" enabled="{ui>/importBtnEnabled}" press="onToolbarImportPress" text="{i18n>ImportButtonText}" tooltip="{i18n>ImportButtonText}"/>
+                        <Button id="pgdc0010.button.export" enabled="{ui>/exportBtnEnabled}" press="onToolbarExportWithSelectionPress" text="{i18n>ExportButtonText}" tooltip="{i18n>ExportButtonTooltipText}"/>
+                        <Button id="pgdc0010.button.assign" enabled="{ui>/assignBtnEnabled}" press="onToolbarAssignPress" text="{i18n>AssignButtonText}" tooltip="{i18n>AssignButtonText}"/>
+                        <Button id="pgdc0010.button.log" press="onToolbarShowLogPress" text="{i18n>LogButtonText}" tooltip="{i18n>LogButtonText}"/>
+                        <Button id="pgdc0010.button.create.mapping" enabled="{ui>/createMappingBtnEnabled}" press="onToolbarCreateMappingPress" text="{i18n>CreateMappingButtonText}" tooltip="{i18n>CreateMappingButtonText}"/>
+                        <Button id="pgdc0010.button.delete" enabled="{ui>/deleteBtnEnabled}" press="cmd:Delete" text="{i18n>DeleteButtonText}" tooltip="{i18n>DeleteButtonText}"/>
+                        <Button id="pgdc0010.button.duplicate" enabled="{ui>/duplicateBtnEnabled}" press="onToolbarDuplicatePress" text="{i18n>DuplicateButtonText}" tooltip="{i18n>DuplicateButtonText}"/>
+                        <Button id="pgdc0010.button.create.revison" enabled="{ui>/createRevisionBtnEnabled}" press="onToolbarCreateRevisionPress" text="{i18n>CreateRevisionButtonText}" tooltip="{i18n>CreateRevisionButtonText}"/>
+                        </OverflowToolbar>
+                        </smarttable:customToolbar>
+                        <table:Table id="pgdc0010.worklist.analyticaltable" showColumnVisibilityMenu="false" enableColumnFreeze="false" enableCellFilter="true" visibleRowCountMode="Auto" threshold="100" minAutoRowCount="10" rowActionCount="1">
+                            <table:plugins>
+                                <plugins:MultiSelectionPlugin id="analyticalTableSelectionPlugin" selectionChange="onMapListRowSelectionChange" limit="100" enableNotification="true"/>
+                            </table:plugins>
+                            <table:Column hAlign="Begin" id="pgdc0010.table.column.GrStatus" width="10rem" tooltip="{/#GRVCOA02Type/GrStatus/@sap:label}" visible="true">
+                                <Label id="pgdc0010.table.column.isDraft.label" text="{/#GRVCOA02Type/GrStatus/@sap:label}"/>
+                                <table:template>
+                                    <ObjectStatus id="GrStatusObjectStatus" icon="{parts:[{path:'GrStatus'}],formatter:'.formatter.formatterStatusIcon'}" text="{parts:[{path:'GrStatus'}],formatter:'.formatter.formatterStatusText'}" state="{parts:[{path:'GrStatus'},{path:'HasActiveEntity'}],formatter:'.formatter.formatterStatusState'}"/>
+                                </table:template>
+                                <table:customData>
+                                    <core:CustomData id="GrStatusCustomData" key="p13nData" value="{'columnKey':'GrStatus','leadingProperty':'GrStatus','columnIndex':'0'}"/>
+                                </table:customData>
+                            </table:Column>
+                            <table:Column hAlign="Begin" id="pgdc0010.table.column.ChartOfAccounts" width="15rem" tooltip="{/#GRVCOA02Type/Rbunit/@sap:label}" visible="true" sortProperty="Rbunit">
+                                <Label id="pgdc0010.table.column.ChartOfAccounts.label" text="{/#GRVCOA02Type/Rbunit/@sap:label}"/>
+                                <table:template>
+                                    <smartField:SmartField id="sf.vh.ChartOfAccounts" enabled="false" editable="false" value="{Rbunit}" wrapping="false">
+                                        <smartField:configuration>
+                                            <smartField:Configuration id="GLChartOfAccountsSmartFieldConfiguration" controlType="auto" displayBehaviour="idAndDescription"/>
+                                        </smartField:configuration>
+                                    </smartField:SmartField>
+                                </table:template>
+                                <table:customData>
+                                    <core:CustomData id="ChartOfAccountsCustomData" key="p13nData" value="{'columnKey': 'Rbunit', 'leadingProperty': 'Rbunit', 'columnIndex': '2'}"/>
+                                </table:customData>
+                            </table:Column>
+                            <table:Column hAlign="Begin" id="pgdc0010.table.column.ConsolidationChartOfAccounts" width="10rem" tooltip="{/#GRVCOA02Type/Ritclg/@sap:label}" visible="true" sortProperty="Ritclg">
+                                <Label id="pgdc0010.table.column.ConsolidationChartOfAccounts.label" text="{/#GRVCOA02Type/Ritclg/@sap:label}"/>
+                                <table:template>
+                                    <smartField:SmartField id="sf.vh.ConsolidationChartOfAccounts" enabled="false" editable="false" value="{Ritclg}" wrapping="false">
+                                        <smartField:configuration>
+                                            <smartField:Configuration id="ConsolidationChartOfAccountsSmartFieldConfiguration" controlType="auto" displayBehaviour="idAndDescription"/>
+                                        </smartField:configuration>
+                                    </smartField:SmartField>
+                                </table:template>
+                                <table:customData>
+                                    <core:CustomData id="ConsolidationChartOfAccountsCustomData" key="p13nData" value="{'columnKey': 'Ritclg', 'leadingProperty': 'Ritclg', 'columnIndex': '3'}"/>
+                                </table:customData>
+                            </table:Column>
+                            <table:Column hAlign="Begin" id="pgdc0010.table.column.FSItemMappingId" width="20rem" tooltip="{/#GRVCOA02Type/MappingId/@sap:label}" visible="true" sortProperty="MappingId">
+                                <Label id="pgdc0010.table.column.FSItemMappingId.label" text="{/#GRVCOA02Type/MappingId/@sap:label}"/>
+                                <table:template>
+                                    <smartField:SmartField id="sf.vh.FSItemMappingId" enabled="false" editable="false" value="{MappingId}" wrapping="false">
+                                        <smartField:configuration>
+                                        <smartField:Configuration id="FSItemMappingIdSmartFieldConfiguration" controlType="auto" displayBehaviour="idAndDescription"/>
+                                        </smartField:configuration>
+                                    </smartField:SmartField>
+                                </table:template>
+                                <table:customData>
+                                    <core:CustomData id="FSItemMappingIdCustomData" key="p13nData" value="{'columnKey': 'MappingId', 'leadingProperty': 'MappingId', 'columnIndex': '4'}"/>
+                                </table:customData>
+                            </table:Column>
+                            <table:Column hAlign="Begin" id="pgdc0010.table.column.FSItemMappingRevision" width="15rem" tooltip="{/#GRVCOA02Type/Revision/@sap:label}" visible="true" sortProperty="Revision">
+                                <Label id="pgdc0010.table.column.FSItemMappingRevision.label" text="{/#GRVCOA02Type/Revision/@sap:label}"/>
+                                <table:template>
+                                    <HBox id="FSItemMappingRevisionHBox">
+                                        <smartField:SmartField id="sf.vh.FSItemMappingRevision" enabled="false" editable="false" value="{Revision}" wrapping="false">
+                                            <smartField:configuration>
+                                                <smartField:Configuration id="FSItemMappingRevisionSmartFieldConfiguration" controlType="auto" displayBehaviour="idAndDescription"/>
+                                            </smartField:configuration>
+                                        </smartField:SmartField>
+                                    </HBox>
+                                </table:template>
+                                <table:customData>
+                                    <core:CustomData id="FSItemMappingRevisionCustomData" key="p13nData" value="{'columnKey': 'Revision', 'leadingProperty': 'Revision', 'columnIndex': '5'}"/>
+                                </table:customData>
+                            </table:Column>
+                            <table:rowActionTemplate>
+                                <table:RowAction id="navigationRowAction">
+                                    <table:items>
+                                        <table:RowActionItem id="navigationRowActionItem" type="Navigation" press="onPressNavigation"/>
+                                    </table:items>
+                                </table:RowAction>
+                            </table:rowActionTemplate>
+                        </table:Table>
+                    </smarttable:SmartTable>
+                </VBox>
+            </f:content>
+    </f:DynamicPage>
+</mvc:View>
+

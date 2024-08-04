@@ -1,0 +1,87 @@
+<mvc:View id="pgdc0010.assignMapping" 
+          xmlns:mvc="sap.ui.core.mvc" 
+          xmlns:f="sap.f" 
+          xmlns:semantic="sap.m.semantic" 
+          xmlns:table="sap.ui.table" 
+          xmlns:core="sap.ui.core" 
+          xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" 
+          xmlns:smartTable="sap.ui.comp.smarttable" 
+          controllerName="pgdc0010.controller.RevisionMap" 
+          xmlns:smartVariantManagement="sap.ui.comp.smartvariants" 
+          xmlns:plugins="sap.ui.table.plugins" 
+          xmlns:smartField="sap.ui.comp.smartfield" 
+          xmlns="sap.m">
+    <f:DynamicPage id="page" class="sapFioriListReportPageOverflow" showFooter="false" enableScrolling="false">
+        <f:dependents>
+            <core:CommandExecution id="pgdc0010.Worklist.EditCommand" command="Edit" enabled="true" execute=".onEdit"/>
+            <core:CommandExecution id="pgdc0010.Worklist.SearchCommand" command="Enter" enabled="true" execute=".onSearch"/>
+            <core:CommandExecution id="pgdc0010.Worklist.AddCommand" command="Create" enabled="true" execute=".onNew"/>
+            <core:CommandExecution id="pgdc0010.Worklist.DeleteCommand" command="Delete" enabled="true" execute=".onDelete"/>
+        </f:dependents>
+        <f:title>
+            <f:DynamicPageTitle id="pageTitle">
+                <f:heading>
+                    <smartVariantManagement:SmartVariantManagement id="smartVariant" persistencyKey="SmartFilter_Explored"/>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader id="pageHeader" pinnable="false">
+                <f:content>
+                    <smartFilterBar:SmartFilterBar 
+                        smartVariant="smartVariant" 
+                        id="smartFilterBar" 
+                        visible="true"  
+                        entitySet="GRVCOA03" 
+                        persistencyKey="SmartFilter" 
+                        enableBasicSearch="false" 
+                        search="cmd:Enter" 
+                        useToolbar="false">
+                            <smartFilterBar:controlConfiguration>
+                                <smartFilterBar:ControlConfiguration
+                                    key="Ritclg"
+                                    visibleInAdvancedArea="true" />
+                                <smartFilterBar:ControlConfiguration
+                                    key="Rbunit"
+                                    visibleInAdvancedArea="true" />
+                                <smartFilterBar:ControlConfiguration
+                                    key="Fsmvs"
+                                    visibleInAdvancedArea="true" />
+                                <smartFilterBar:ControlConfiguration
+                                    key="FyearperiodTo"
+                                    visibleInAdvancedArea="true"
+                                    visible="false"
+                                    hasValueHelpDialog="false" />
+                            </smartFilterBar:controlConfiguration>
+                    </smartFilterBar:SmartFilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <smartTable:SmartTable id="pgdc0010.smartTable" entitySet="GRVCOA03" 
+                smartFilterId="smartFilterBar" useExportToExcel="true" tableType="Table" 
+                useVariantManagement="true" useTablePersonalisation="true" enableAutoColumnWidth="true" 
+                header="{i18n>Items}" showRowCount="true" persistencyKey="SmartTableRefApp_Explored" 
+                customizeConfig="{'autoColumnWidth': {'*': {'truncateLabel': false}}}" enableAutoBinding="true" beforeRebindTable="onBeforeRebind" 
+                afterVariantApply="onAfterApplyVariant" 
+                requestAtLeastFields="Fsmvs,Ritclg,Rbunit,FyearperiodTo,FyearperiodFr,MappingId,Revision,Uuid" 
+                initiallyVisibleFields="FyearperiodTo,FyearperiodFr,Ritclg,Rbunit,MappingId,Revision,"
+                ignoredFields="FiscalYearPeriod"
+                >
+                <smartTable:customToolbar>
+                    <OverflowToolbar id="overflowToolbar" design="Transparent">
+                        <ToolbarSpacer id="overflowToolbarSpacer"/>
+                        <Button id="btnNew" tooltip="{i18n>New}" text="{i18n>New}" press="cmd:Create" type="Transparent"/>
+                        <Button id="btnEdit" tooltip="{i18n>Edit}" text="{i18n>Edit}" press="cmd:Edit" type="Transparent"/>
+                        <Button id="btnDelete" tooltip="{i18n>Delete}" text="{i18n>Delete}" press="cmd:Delete" type="Transparent"/>
+                    </OverflowToolbar>
+                </smartTable:customToolbar>
+                <table:Table id="pgdc0010.table" visibleRowCountMode="Auto" columnResize="onColumnResize">
+                    <table:plugins>
+                        <plugins:MultiSelectionPlugin id="tableSelectionPlugin" selectionChange="onRowSelectionChange" limit="100" enableNotification="true"/>
+                    </table:plugins>
+                </table:Table>
+            </smartTable:SmartTable>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

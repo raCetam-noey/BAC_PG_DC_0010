@@ -1,0 +1,214 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "pgdc0010",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.13.6",
+      "toolsId": "f6e9b166-d173-440d-aae7-1632b486ca94"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/sap/opu/odata/sap/ZSB_GRVCOA/",
+        "type": "OData",
+        "settings": {
+          "annotations": ["localAnnotations"],
+          "odataVersion": "2.0"
+        }
+      },
+      "localAnnotations": {
+        "uri": "/sap/opu/odata/sap/ZSB_GRVCOA/$metadata",
+        "type": "ODataAnnotation"
+    }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "pgdc0010-display": {
+          "semanticObject": "pgdc0010",
+          "action": "display",
+          "title": "{{flpTitle}}",
+          "icon": "sap-icon://Fiori4/F0260",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "fullWidth": true,
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.120.13",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.suite.ui.generic.template": {},
+        "sap.ui.comp": {},
+        "sap.ui.generic.app": {},
+        "sap.ui.table": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "commands": {
+      "Enter": {
+        "shortcut": "Enter"
+      },
+      "Create": {
+        "shortcut": "Ctrl+Enter"
+      },
+      "Delete": {
+        "shortcut": "Ctrl+D"
+      },
+      "Save": {
+        "shortcut": "Ctrl+S"
+      },
+      "Edit": {
+        "shortcut": "Ctrl+E"
+      }
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "pgdc0010.i18n.i18n"
+        }
+      },
+      "": {
+        "preload": true,
+        "dataSource": "mainService",
+        "settings": {
+          "defaultOperationMode": "Server",
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "pgdc0010.view",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "clearControlAggregation": false
+      },
+      "routes": [
+        {
+          "pattern": ":*all:",
+          "name": "worklist",
+          "target": [
+            "worklist"
+          ]
+        },
+        {
+          "pattern": ":*all:{?query}",
+          "name": "iAppState",
+          "target": "worklist"
+        },
+        {
+          "pattern": "ExcelUpload/{objectId}",
+          "name": "ExcelUpload",
+          "target": "ExcelUpload"
+        },
+        {
+          "pattern": "Detail/{objectId}",
+          "name": "Detail",
+          "target": "Detail"
+        },
+        {
+          "pattern": "Detail/{objectId}?sap-iapp-state={appStateKey}",
+          "name": "DetailWithAppState",
+          "target": "Detail"
+        },
+        {
+          "pattern": "assignMapping/{objectId}",
+          "name": "assignMapping",
+          "target": "assignMapping"
+        }
+      ],
+      "targets": {
+        "worklist": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Main",
+          "viewName": "Main",
+          "placeholder": {
+            "html": "sap/fe/placeholder/view/PlaceholderLR.fragment.html",
+            "autoClose": false
+          }
+        },
+        "Detail": {
+          "viewName": "Detail",
+          "viewId": "detailview",
+          "viewLevel": 2,
+          "placeholder": {
+            "html": "sap/fe/placeholder/view/PlaceholderOP.fragment.html",
+            "autoClose": false
+          }
+        },
+        "ExcelUpload": {
+          "viewName": "ExcelUpload",
+          "viewId": "ExcelUpload"
+        },
+        "assignMapping": {
+          "viewName": "RevisionMap",
+          "viewId": "assignMapping"
+        },
+        "objectNotFound": {
+          "viewName": "ObjectNotFound",
+          "viewId": "objectNotFound"
+        },
+        "notFound": {
+          "viewName": "NotFound",
+          "viewId": "notFound"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "pgdc0010.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "App"
+    }
+  }
+}

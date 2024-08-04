@@ -1,0 +1,65 @@
+<mvc:View controllerName="pgdc0010.controller.ExcelUpload"
+    id="ExcelUpload"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:table="sap.ui.table"
+	xmlns:u="sap.ui.unified"
+    xmlns:l="sap.ui.layout" 
+    xmlns:semantic="sap.m.semantic" 
+    xmlns:unified="sap.ui.unified" 
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:plugins="sap.ui.table.plugins"
+    xmlns:upload="sap.m.upload"
+  >
+    <semantic:FullscreenPage id="pgdc0010.MainPage" 
+                             class="sapFioriListReportPageOverflow" 
+                             showFooter="true" 
+                             enableScrolling="false">
+        <semantic:content id="MainContent">
+            <Panel id="contentPanel">
+                <FlexBox id="contentFlexBox" alignItems="Center" height="4rem" justifyContent="Center">
+                    <unified:FileUploader id="pgdc0010.uploader" 
+                                          name="postingExcelUpload" 
+                                          width="400px" 
+                                          tooltip="{i18n>SelectFile}" 
+                                          class="sapUiSmallMarginEnd" 
+                                          change="excelHandleUploadPress"
+                                          uploadComplete="excelHandleUploadComplete" 
+                                          fileType="xls,xlsx" 
+                                          sendXHR="true" 
+                                          sameFilenameAllowed="true" 
+                                          maximumFileSize="100" 
+                                          uploadOnChange="false" 
+                                          useMultipart="false" 
+                                          placeholder="{i18n>UploadHint}"/>
+                    <Button id="uploadButton" 
+                            visible="false"
+                            text="{i18n>UploadButtonText}" 
+                            tooltip="{i18n>UploadButtonText}" 
+                            type="Transparent" 
+                            press="excelHandleUploadPress"/>
+                    <Button id="downloadButton" 
+                            text="{i18n>DownloadButtonText}" 
+                            tooltip="{i18n>DownloadButtonText}" 
+                            type="Transparent" 
+                            press="onDownloadPress"/>
+                </FlexBox>
+                <VBox visible="false" 
+                      class="sapUiMediumMarginBeginEnd sapUiTinyMarginTopBottom" 
+                      id="pgdc0010.MessageStripVbox"/>
+                <BusyDialog id="pgdc0010.BusyDialog"/>
+            </Panel>
+          
+        </semantic:content>
+        <semantic:customFooterContent>
+            <Button id="pgdc0010.btn.import" 
+                    tooltip="{i18n>ImportButtonText}" 
+                    type="Emphasized" 
+                    text="{i18n>ImportButtonText}" 
+                    press="onSave" 
+                    enabled="{ui>/importBtnEnabled}"/>
+        </semantic:customFooterContent>
+    </semantic:FullscreenPage>
+</mvc:View>

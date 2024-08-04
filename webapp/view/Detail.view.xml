@@ -1,0 +1,477 @@
+<mvc:View
+    id="pgdc0010.detailview"
+    controllerName="pgdc0010.controller.Detail"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:semantic="sap.f.semantic"
+    xmlns:footerbar="sap.ushell.ui.footerbar"
+    xmlns:uxap="sap.uxap"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:smarttable="sap.ui.comp.smarttable"
+    xmlns:plugins="sap.ui.table.plugins"
+    xmlns:table="sap.ui.table"
+    height="100%">
+
+    <Page
+        id="page"
+        navButtonPress="onNavBack"
+        showNavButton="true"
+        showHeader="false">
+
+        <dependents>
+            <core:CommandExecution
+                id="pgdc0010.Detail.EditCommand"
+                command="Edit"
+                enabled="{= !${ui>/editMode} }"
+                execute=".onToolbarEditPress" />
+
+            <core:CommandExecution
+                id="pgdc0010.Detail.SaveCommand"
+                command="Save"
+                enabled="{UIModel>/editable}"
+                execute=".onEditSave" />
+
+            <core:CommandExecution
+                id="pgdc0010.Detail.AddCommand"
+                command="Create"
+                enabled="true"
+                execute=".onToolbarAddPress" />
+
+            <core:CommandExecution
+                id="pgdc0010.Detail.DeleteCommand"
+                command="Delete"
+                enabled="{ui>/deleteMapBtnEnabled}"
+                execute=".onToolbarDeletePress" />
+        </dependents>
+
+        <content>
+            <uxap:ObjectPageLayout
+                id="pgdc0010.ObjectPageLayout"
+                enableLazyLoading="true"
+                showFooter="false"
+                upperCaseAnchorBar="false"
+                alwaysShowContentHeader="false"
+                preserveHeaderStateOnScroll="false"
+                navigate="onNavSection"
+                selectedSection="pgdc0010.section0"
+                useIconTabBar="true">
+
+                <uxap:headerTitle>
+                    <uxap:ObjectPageDynamicHeaderTitle id="ChartOfAccountsObjectPageHeader">
+                        <uxap:heading>
+                            <HBox id="ObjectPage.ObjectPageHeaderBox">
+                                <Title
+                                    id="ObjectPage.ObjectPageHeaderTitle"
+                                    text="{detailView>/ConsUnitHeader}"
+                                    class="sapUiSmallMarginEnd" />
+                                <Text
+                                    id="ObjectPage.ObjectPageHeaderTitleText"
+                                    text="{detailView>/ConsolidationChartOfAcctsHeader}" />
+                            </HBox>
+                        </uxap:heading>
+                        <uxap:actions>
+                            <uxap:ObjectPageHeaderActionButton
+                                id="editButton"
+                                text="{i18n>EditButtonText}"
+                                tooltip="{i18n>EditButtonText}"
+                                hideIcon="true"
+                                hideText="false"
+                                type="Emphasized"
+                                visible="{= !${ui>/editMode} }"
+                                press="cmd:Edit" />
+                        </uxap:actions>
+                    </uxap:ObjectPageDynamicHeaderTitle>
+                </uxap:headerTitle>
+
+                <uxap:headerContent>
+                    <VBox id="headerContentVBox">
+                        <ObjectAttribute
+                            id="FSItemMappingIdObjectAttribute"
+                            title="{i18n>FSItemMappingIdTitle}"
+                            text="{detailView>/FSItemMappingIdHeader}" />
+                        <ObjectAttribute
+                            id="FSItemMappingRevisionObjectAttribute"
+                            title="{i18n>FSItemMappingRevisionTitle}"
+                            text="{detailView>/FSItemMappingRevisionHeader}" />
+                    </VBox>
+                </uxap:headerContent>
+
+                <uxap:sections>
+                    <uxap:ObjectPageSection
+                        id="pgdc0010.section0"
+                        title="{i18n>ObjectSectionText0}"
+                        showTitle="false"
+                        titleUppercase="false">
+                        <uxap:subSections>
+                            <uxap:ObjectPageSubSection
+                                id="pgdc0010.sub.section0"
+                                >
+                                <uxap:blocks>
+                                  <smarttable:SmartTable
+                                        header="{i18n>ObjectSectionText0}"
+                                        id="pgdc0010.smartTable.mapping"
+                                        class="sapFioriListReportTable"
+                                        height="100%"
+                                        tableType="Table"
+                                        showRowCount="true"
+                                        showFullScreenButton="false"
+                                        useTablePersonalisation="true"
+                                        showTablePersonalisation="false"
+                                        useVariantManagement="false"
+                                        enableAutoBinding="true"
+                                        beforeRebindTable="onBeforeRebindMapTable"
+                                        enableAutoColumnWidth="true"
+                                        entitySet="FsItemMappingEntity"
+                                        initiallyVisibleFields="CnsldtnCOA,CnsldtnUnit,MappingID,Revision,CnsldtnFSItem,CnsldtnFSItemText,CnsldtnFSItemMediumText,CnsldtnFSItemLongText,GLAccount,GLAccountLocalText,GLAccountGroupText"
+                                        requestAtLeastFields="CnsldtnCOA,CnsldtnUnit,MappingID,Revision,CnsldtnFSItem,CnsldtnFSItemText,CnsldtnFSItemMediumText,CnsldtnFSItemLongText,GLAccount,GLAccountLocalText,GLAccountGroupText">
+
+                
+                                        <smarttable:layoutData>
+                                            <FlexItemData id="FlexItemData" growFactor="1" baseSize="0%" />
+                                        </smarttable:layoutData>
+
+                                        <table:Table
+                                            width="100%"
+                                            id="pgdc0010.table.mapping"
+                                            enableColumnReordering="false"
+                                            enableCustomFilter="false"
+                                            enableCellFilter="false"
+                                            threshold="100"
+                                            minAutoRowCount="18"
+                                            rowActionCount="1"
+                                            visibleRowCountMode="Auto">
+                                            
+                                            <table:plugins>
+                                                <plugins:MultiSelectionPlugin
+                                                    id="mappingTableSelectionPlugin"
+                                                    selectionChange="onMapRowSelectionChange"
+                                                    limit="100"
+                                                    enableNotification="true"
+                                                    selectionMode="None" />
+                                            </table:plugins>
+
+                                            <table:rowSettingsTemplate>
+                                                <table:RowSettings
+                                                    id="RowSettings"
+                                                    highlight="{path:'HasError',formatter:'.formatter.formatterRowStatus'}" />
+                                            </table:rowSettingsTemplate>
+
+                                            <table:Column
+                                                hAlign="Begin"
+                                                id="pgdc0010.table.mapping.column.ConsolidationCOA"
+                                                width="10rem"
+                                                tooltip="{/#FsItemMappingEntityType/CnsldtnCOA/@sap:label}"
+                                                visible="true"
+                                                filterProperty="CnsldtnCOA"
+                                                sortProperty="CnsldtnCOA">
+                                                <Label
+                                                    id="pgdc0010.table.mapping.column.ConsolidationCOA.label"
+                                                    text="{/#FsItemMappingEntityType/CnsldtnCOA/@sap:label}" />
+                                                <table:template>
+                                                    <smartField:SmartField
+                                                        id="pgdc0010.table.column.sf.ConsolidationCOA"
+                                                        editable="{ui>/editMode}"
+                                                        enabled="true"
+                                                        value="{CnsldtnCOA}"
+                                                        showSuggestion="true"
+                                                        change="onMappingItemChange" />
+                                                </table:template>
+                                                <table:customData>
+                                                    <core:CustomData
+                                                        id="ConsolidationCOACustomData"
+                                                        key="p13nData"
+                                                        value='{"columnKey": "CnsldtnCOA", "leadingProperty": "CnsldtnCOA", "columnIndex": "0"}' />
+                                                </table:customData>
+                                            </table:Column>
+
+                                            <table:Column
+                                                hAlign="Begin"
+                                                id="pgdc0010.table.mapping.column.ConsolidationUnit"
+                                                width="5rem"
+                                                tooltip="{/#FsItemMappingEntityType/CnsldtnUnit/@sap:label}"
+                                                visible="true"
+                                                filterProperty="CnsldtnUnit"
+                                                sortProperty="CnsldtnUnit">
+                                                <Label
+                                                    id="pgdc0010.table.mapping.column.ConsolidationUnit.label"
+                                                    text="{/#FsItemMappingEntityType/CnsldtnUnit/@sap:label}" />
+                                                <table:template>
+                                                    <smartField:SmartField
+                                                        id="pgdc0010.table.column.sf.ConsolidationUnit"
+                                                        editable="false"
+                                                        enabled="false"
+                                                        value="{CnsldtnUnit}"
+                                                        change="onMappingItemChange" />
+                                                </table:template>
+                                                <table:customData>
+                                                    <core:CustomData
+                                                        id="ConsolidationUnitCustomData"
+                                                        key="p13nData"
+                                                        value='{"columnKey": "CnsldtnUnit", "leadingProperty": "CnsldtnUnit", "columnIndex": "1"}' />
+                                                </table:customData>
+                                            </table:Column>
+                                            <table:Column
+                                                hAlign="Begin"
+                                                id="pgdc0010.table.mapping.column.MappingID"
+                                                width="5rem"
+                                                tooltip="{/#FsItemMappingEntityType/MappingID/@sap:label}"
+                                                visible="{= ${ui>/messageTextColumnVisible} }">
+                                                <Label
+                                                    id="pgdc0010.table.mapping.column.MappingID.label"
+                                                    text="{/#FsItemMappingEntityType/MappingID/@sap:label}" />
+                                                <table:template>
+                                                    <smartField:SmartField
+                                                        id="pgdc0010.table.column.sf.MappingID"
+                                                        editable="false"
+                                                        enabled="true"
+                                                        value="{MappingID}" />
+                                                </table:template>
+                                                <table:customData>
+                                                    <core:CustomData
+                                                        id="MappingIdCustomData"
+                                                        key="p13nData"
+                                                        value='{"columnKey": "MappingID", "leadingProperty": "MappingID", "columnIndex": "2"}' />
+                                                </table:customData>
+                                            </table:Column>
+
+                                            <table:Column
+                                                hAlign="Begin"
+                                                id="pgdc0010.table.mapping.column.Revision"
+                                                width="5rem"
+                                                tooltip="{/#FsItemMappingEntityType/Revision/@sap:label}"
+                                                visible="true"
+                                                filterProperty="Revision"
+                                                sortProperty="Revision">
+                                                <Label
+                                                    id="pgdc0010.table.mapping.column.Revision.label"
+                                                    text="{/#FsItemMappingEntityType/Revision/@sap:label}" />
+                                                <table:template>
+                                                    <smartField:SmartField
+                                                        id="pgdc0010.table.column.sf.Revision"
+                                                        editable="{ui>/editMode}"
+                                                        enabled="true"
+                                                        value="{Revision}"
+                                                        showSuggestion="true"
+                                                        change="onMappingItemChange" />
+                                                </table:template>
+                                                <table:customData>
+                                                    <core:CustomData
+                                                        id="RevisionCustomData"
+                                                        key="p13nData"
+                                                        value='{"columnKey": "Revision", "leadingProperty": "Revision", "columnIndex": "3"}' />
+                                                </table:customData>
+                                            </table:Column>
+
+                                            <table:Column
+                                                hAlign="Begin"
+                                                id="pgdc0010.table.mapping.column.FinancialStatementItem"
+                                                width="10rem"
+                                                tooltip="{/#FsItemMappingEntityType/CnsldtnFSItem/@sap:label}"
+                                                visible="true"
+                                                filterProperty="CnsldtnFSItem"
+                                                sortProperty="CnsldtnFSItem">
+                                                <Label
+                                                    id="pgdc0010.table.mapping.column.FinancialStatementItem.label"
+                                                    text="{/#FsItemMappingEntityType/CnsldtnFSItem/@sap:label}" />
+                                                <table:template>
+                                                    <smartField:SmartField
+                                                        id="pgdc0010.table.column.sf.FinancialStatementItem"
+                                                        editable="false"
+                                                        enabled="false"
+                                                        value="{CnsldtnFSItem}"
+                                                        change="onMappingItemChange" />
+                                                </table:template>
+                                                <table:customData>
+                                                    <core:CustomData
+                                                        id="FinancialStatementItemCustomData"
+                                                        key="p13nData"
+                                                        value='{"columnKey": "CnsldtnFSItem", "leadingProperty": "CnsldtnFSItem", "columnIndex": "7"}' />
+                                                </table:customData>
+                                            </table:Column>
+                                            <table:Column
+                                                hAlign="Begin"
+                                                id="pgdc0010.table.mapping.column.FinancialStatementItemText"
+                                                width="10rem"
+                                                tooltip="{/#FsItemMappingEntityType/CnsldtnFSItemText/@sap:label}"
+                                                visible="true"
+                                                filterProperty="CnsldtnFSItemText"
+                                                sortProperty="CnsldtnFSItemText">
+                                                <Label
+                                                    id="pgdc0010.table.mapping.column.FinancialStatementItemText.label"
+                                                    text="{/#FsItemMappingEntityType/CnsldtnFSItemText/@sap:label}" />
+                                                <table:template>
+                                                    <smartField:SmartField
+                                                        id="pgdc0010.table.column.sf.FinancialStatementItemText"
+                                                        editable="false"
+                                                        enabled="false"
+                                                        value="{CnsldtnFSItemText}"
+                                                        change="onMappingItemChange" />
+                                                </table:template>
+                                                <table:customData>
+                                                    <core:CustomData
+                                                        id="FinancialStatementItemTextCustomData"
+                                                        key="p13nData"
+                                                        value='{"columnKey": "CnsldtnFSItemText", "leadingProperty": "CnsldtnFSItemText", "columnIndex": "8"}' />
+                                                </table:customData>
+                                            </table:Column>
+                                            <table:Column
+                                                hAlign="Begin"
+                                                id="pgdc0010.table.mapping.column.FinancialStatementItemMediumText"
+                                                width="15rem"
+                                                tooltip="{/#FsItemMappingEntityType/CnsldtnFSItemMediumText/@sap:label}"
+                                                visible="true"
+                                                filterProperty="CnsldtnFSItemMediumText"
+                                                sortProperty="CnsldtnFSItemMediumText">
+                                                <Label
+                                                    id="pgdc0010.table.mapping.column.FinancialStatementItemMediumText.label"
+                                                    text="{/#FsItemMappingEntityType/CnsldtnFSItemMediumText/@sap:label}" />
+                                                <table:template>
+                                                    <smartField:SmartField
+                                                        id="pgdc0010.table.column.sf.FinancialStatementItemMediumText"
+                                                        editable="false"
+                                                        enabled="false"
+                                                        value="{CnsldtnFSItemMediumText}"
+                                                        change="onMappingItemChange" />
+                                                </table:template>
+                                                <table:customData>
+                                                    <core:CustomData
+                                                        id="FinancialStatementItemMediumTextCustomData"
+                                                        key="p13nData"
+                                                        value='{"columnKey": "CnsldtnFSItemMediumText", "leadingProperty": "CnsldtnFSItemMediumText", "columnIndex": "9"}' />
+                                                </table:customData>
+                                            </table:Column>
+                                            <table:Column
+                                                hAlign="Begin"
+                                                id="pgdc0010.table.mapping.column.FinancialStatementItemLongText"
+                                                width="15rem"
+                                                tooltip="{/#FsItemMappingEntityType/CnsldtnFSItemLongText/@sap:label}"
+                                                visible="false"
+                                                filterProperty="CnsldtnFSItemLongText"
+                                                sortProperty="CnsldtnFSItemLongText">
+                                                <Label
+                                                    id="pgdc0010.table.mapping.column.FinancialStatementItemLongText.label"
+                                                    text="{/#FsItemMappingEntityType/CnsldtnFSItemLongText/@sap:label}" />
+                                                <table:template>
+                                                    <smartField:SmartField
+                                                        id="pgdc0010.table.column.sf.FinancialStatementItemLongText"
+                                                        editable="false"
+                                                        enabled="false"
+                                                        value="{CnsldtnFSItemLongText}"
+                                                        change="onMappingItemChange" />
+                                                </table:template>
+                                                <table:customData>
+                                                    <core:CustomData
+                                                        id="FinancialStatementItemLongTextCustomData"
+                                                        key="p13nData"
+                                                        value='{"columnKey": "CnsldtnFSItemLongText", "leadingProperty": "CnsldtnFSItemLongText", "columnIndex": "10"}' />
+                                                </table:customData>
+                                            </table:Column>
+                                            <table:Column
+                                                hAlign="Begin"
+                                                id="pgdc0010.table.mapping.column.GLAccount"
+                                                width="10rem"
+                                                tooltip="{/#FsItemMappingEntityType/GLAccount/@sap:label}"
+                                                visible="true"
+                                                filterProperty="GLAccount"
+                                                sortProperty="GLAccount">
+                                                <Label
+                                                    id="pgdc0010.table.mapping.column.GLAccount.label"
+                                                    text="{/#FsItemMappingEntityType/GLAccount/@sap:label}" />
+                                                <table:template>
+                                                    <smartField:SmartField
+                                                        id="pgdc0010.table.column.sf.GLAccount"
+                                                        editable="false"
+                                                        enabled="false"
+                                                        value="{GLAccount}"
+                                                        change="onMappingItemChange" />
+                                                </table:template>
+                                                <table:customData>
+                                                    <core:CustomData
+                                                        id="GLAccountCustomData"
+                                                        key="p13nData"
+                                                        value='{"columnKey": "GLAccount", "leadingProperty": "GLAccount", "columnIndex": "4"}' />
+                                                </table:customData>
+                                            </table:Column>
+                                            <table:Column
+                                                hAlign="Begin"
+                                                id="pgdc0010.table.mapping.column.GLAccountLocalText"
+                                                width="10rem"
+                                                tooltip="{/#FsItemMappingEntityType/GLAccountLocalText/@sap:label}"
+                                                visible="true"
+                                                filterProperty="GLAccountLocalText"
+                                                sortProperty="GLAccountLocalText">
+                                                <Label
+                                                    id="pgdc0010.table.mapping.column.GLAccountLocalText.label"
+                                                    text="{/#FsItemMappingEntityType/GLAccountLocalText/@sap:label}" />
+                                                <table:template>
+                                                    <smartField:SmartField
+                                                        id="pgdc0010.table.column.sf.GLAccountLocalText"
+                                                        editable="false"
+                                                        enabled="false"
+                                                        value="{GLAccountLocalText}"
+                                                        change="onMappingItemChange" />
+                                                </table:template>
+                                                <table:customData>
+                                                    <core:CustomData
+                                                        id="GLAccountLocalTextCustomData"
+                                                        key="p13nData"
+                                                        value='{"columnKey": "GLAccountLocalText", "leadingProperty": "GLAccountLocalText", "columnIndex": "5"}' />
+                                                </table:customData>
+                                            </table:Column>
+                                            <table:Column
+                                                hAlign="Begin"
+                                                id="pgdc0010.table.mapping.column.GLAccountGroupText"
+                                                width="10rem"
+                                                tooltip="{/#FsItemMappingEntityType/GLAccountGroupText/@sap:label}"
+                                                visible="true"
+                                                filterProperty="GLAccountGroupText"
+                                                sortProperty="GLAccountGroupText">
+                                                <Label
+                                                    id="pgdc0010.table.mapping.column.GLAccountGroupText.label"
+                                                    text="{/#FsItemMappingEntityType/GLAccountGroupText/@sap:label}" />
+                                                <table:template>
+                                                    <smartField:SmartField
+                                                        id="pgdc0010.table.column.sf.GLAccountGroupText"
+                                                        editable="false"
+                                                        enabled="false"
+                                                        value="{GLAccountGroupText}"
+                                                        change="onMappingItemChange" />
+                                                </table:template>
+                                                <table:customData>
+                                                    <core:CustomData
+                                                        id="GLAccountGroupTextCustomData"
+                                                        key="p13nData"
+                                                        value='{"columnKey": "GLAccountGroupText", "leadingProperty": "GLAccountGroupText", "columnIndex": "6"}' />
+                                                </table:customData>
+                                            </table:Column>
+
+                                            
+                                        </table:Table>
+                                    </smarttable:SmartTable>
+                                </uxap:blocks>
+                            </uxap:ObjectPageSubSection>
+                        </uxap:subSections>
+                    </uxap:ObjectPageSection>
+                </uxap:sections>
+                <uxap:footer>
+                    <OverflowToolbar id="footer.OverflowToolbar">
+                        <ToolbarSpacer id="footer.OverflowToolbarSpacer" />
+                        <Button
+                            id="pgdc0010.btn.save"
+                            type="Emphasized"
+                            text="{i18n>SaveButtonText}"
+                            tooltip="{i18n>SaveButtonText}"
+                            press="cmd:Save"
+                            enabled="{UIModel>/editable}" />
+                        <Button
+                            id="pgdc0010.btn.cancel"
+                            text="{i18n>CancelButtonText}"
+                            tooltip="{i18n>CancelButtonText}"
+                            press="onEditCancel" />
+                    </OverflowToolbar>
+                </uxap:footer>
+            </uxap:ObjectPageLayout>
+        </content>
+    </Page>
+</mvc:View>

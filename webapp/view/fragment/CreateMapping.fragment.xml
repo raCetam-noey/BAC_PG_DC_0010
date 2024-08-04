@@ -1,0 +1,147 @@
+<core:FragmentDefinition 
+    id="pgdc0010.CreateMappingFragment" 
+    xmlns="sap.m" 
+    xmlns:l="sap.ui.layout" 
+    xmlns:f="sap.ui.layout.form" 
+    xmlns:core="sap.ui.core" 
+    xmlns:u="sap.ui.unified" 
+    xmlns:smartField="sap.ui.comp.smartfield">
+    <Dialog id="pgdc0010.create.mapping.dialog" 
+        title="{i18n>CreateMappingDialogTitle}" 
+        draggable="true" 
+        contentWidth="480px" 
+        contentHeight="{ui>/createMappingContentHeight}">
+        <content>
+            <Panel id="createMappingFragmentContentPanel" width="480px" height="{ui>/createMappingContentHeight}">
+                <content>
+                    <f:SimpleForm id="pgdc0010.simpleForm.create.mapping" 
+                        editable="true" 
+                        layout="ResponsiveGridLayout" 
+                        singleContainerFullSize="false" 
+                        labelSpanXL="4" 
+                        labelSpanL="4" 
+                        labelSpanM="2" 
+                        emptySpanXL="0" 
+                        emptySpanL="2" 
+                        emptySpanM="1" 
+                        columnsXL="2" 
+                        columnsL="1" 
+                        columnsM="1">
+                        <f:content>
+                            <Label id="pgdc0010.create.mapping.label.MappingId" 
+                                text="{i18n>MappingIdLabelText}" 
+                                tooltip="{i18n>MappingIdLabelText}" 
+                                labelFor="pgdc0010.create.mapping.input.MappingId" 
+                                required="true"/>
+                            <Input id="pgdc0010.create.mapping.input.MappingId" 
+                                type="Text" 
+                                value="{path:'ui>/MappingId',type:'sap.ui.model.type.String',constraints:{minLength:1,maxLength:10}}" 
+                                valueStateText="{i18n>MappingIdInputValueStateText}"/>
+                            <Label id="pgdc0010.create.mapping.label.mappingDescLo" 
+                                text="{i18n>MappingDescLoLabelText}" 
+                                tooltip="{i18n>MappingDescLoLabelText}" 
+                                labelFor="pgdc0010.create.mapping.input.mappingDescLo" 
+                                required="true"/>
+                            <Input id="pgdc0010.create.mapping.input.mappingDescLo" 
+                                type="Text" 
+                                value="{path:'ui>/mappingDescLo',type:'sap.ui.model.type.String',constraints:{minLength:1,maxLength:60}}" 
+                                valueStateText="{i18n>MappingDescInputValueStateText}"/>
+                            <Label id="pgdc0010.create.mapping.label.mappingDescGr" 
+                                text="{i18n>MappingDescGrLabelText}" 
+                                tooltip="{i18n>MappingDescGrLabelText}" 
+                                labelFor="pgdc0010.create.mapping.input.mappingDescGr" 
+                            />
+                            <Input id="pgdc0010.create.mapping.input.mappingDescGr" 
+                                type="Text" 
+                                value="{path:'ui>/mappingDescGr',type:'sap.ui.model.type.String',constraints:{minLength:1,maxLength:60}}" 
+                                valueStateText="{i18n>MappingDescInputValueStateText}"/>
+                            <CheckBox id="pgdc0010.create.mapping.checkbox.revision" 
+                                text="{i18n>WithRevisionCheckBoxText}" 
+                                tooltip="{i18n>WithRevisionCheckBoxText}" 
+                                selected="true" 
+                                enabled="false"
+                                class="sapUiMediumMarginTop sapUiResponsiveMargin" 
+                                select="onWithRevisionCheckBoxSelect"/>
+                            <Label visible="{ui>/createMappingContentVisible}" 
+                                id="pgdc0010.create.mapping.label.cons.coa" 
+                                text="{i18n>ConsCoALabelText}" 
+                                tooltip="{i18n>ConsCoALabelText}" 
+                                labelFor="pgdc0010.create.mapping.select.cons.coa" 
+                                required="true"/>
+                            <Select visible="{ui>/createMappingContentVisible}" 
+                                id="pgdc0010.create.mapping.select.cons.coa" 
+                                ariaLabelledBy="pgdc0010.create.mapping.label.cons.coa" 
+                                width="100%" 
+                                selectedKey="ALL" 
+                                change="onConsCoaSelectionChange" 
+                                forceSelection="true" 
+                                enabled="true" 
+                                showSecondaryValues="true" 
+                                items="{path:'/VH_RITCLG',templateShareable:false,sorter:{path:'Ritclg'}}">
+                                <core:ListItem id="consolidationCoAListItem" 
+                                    key="{Ritclg}" 
+                                    text="{Ritclg}" 
+                                    additionalText=""/>
+                            </Select>
+                            <Label visible="{ui>/createMappingContentVisible}" 
+                                id="pgdc0010.create.mapping.label.gl.coa" 
+                                text="{i18n>ConsUnitLabelText}" 
+                                tooltip="{i18n>ConsUnitLabelText}" 
+                                labelFor="pgdc0010.create.mapping.select.gl.coa" 
+                                required="true"/>
+                            <Select visible="{ui>/createMappingContentVisible}" 
+                                id="pgdc0010.create.mapping.select.gl.coa" 
+                                ariaLabelledBy="pgdc0010.create.mapping.label.gl.coa" 
+                                width="100%"
+                                selectedKey="ALL" 
+                                change="onConsCoaSelectionChange" 
+                                forceSelection="true" 
+                                enabled="true" 
+                                showSecondaryValues="true" 
+                                items="{path:'/VH_RBUNIT',templateShareable:false,sorter:{path:'Rbunit'}}">
+                                <core:ListItem id="glCoAListItem" 
+                                    key="{Rbunit}" 
+                                    text="{Rbunit}" />
+                            </Select>
+                            <Label visible="{ui>/createMappingContentVisible}" 
+                                id="pgdc0010.create.mapping.label.revision" 
+                                text="{i18n>MappingRevisionLabelText}" 
+                                tooltip="{i18n>MappingRevisionLabelText}" 
+                                labelFor="pgdc0010.create.mapping.input.revision" 
+                                required="true"/>
+                            <Input visible="{ui>/createMappingContentVisible}" 
+                                id="pgdc0010.create.mapping.input.revision" 
+                                type="Text" 
+                                value="{path:'ui>/revision',type:'sap.ui.model.type.String',constraints:{minLength:1,maxLength:10}}" 
+                                valueStateText="{i18n>RevisionInputValueStateText}"/>
+                            <Label visible="{ui>/createMappingContentVisible}" 
+                                id="pgdc0010.create.mapping.label.revision.desc" 
+                                text="{i18n>RevisionDescLoLabelText}" 
+                                tooltip="{i18n>RevisionDescLoLabelText}" 
+                                labelFor="pgdc0010.create.mapping.input.revision.desc" 
+                                required="true"/>
+                            <Input visible="{ui>/createMappingContentVisible}" 
+                                id="pgdc0010.create.mapping.input.revision.desc" 
+                                type="Text" 
+                                value="{path:'ui>/revisionDescLo',type:'sap.ui.model.type.String',constraints:{minLength:1,maxLength:60}}" 
+                                valueStateText="{i18n>RevisionDescInputValueStateText}"/>
+                        </f:content>
+                    </f:SimpleForm>
+                </content>
+            </Panel>
+        </content>
+        <beginButton>
+            <Button id="pgdc0010.button.ok" 
+                text="{i18n>OkButtonText}" 
+                tooltip="{i18n>OkButtonText}" 
+                type="Emphasized" 
+                press="handleCreateMappingPress"/>
+        </beginButton>
+        <endButton>
+            <Button id="pgdc0010.button.cancel" 
+                text="{i18n>CancelButtonText}" 
+                tooltip="{i18n>CancelButtonText}" 
+                press="handleCreateMappingCancelPress"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

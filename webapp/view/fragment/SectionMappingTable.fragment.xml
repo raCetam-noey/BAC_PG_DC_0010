@@ -1,0 +1,233 @@
+<core:FragmentDefinition
+    id="pgdc0010.SectionMappingTable"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:smarttable="sap.ui.comp.smarttable"
+    xmlns:plugins="sap.ui.table.plugins"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:table="sap.ui.table">
+
+    <smarttable:SmartTable
+        id="pgdc0010.smartTable.mapping"
+        class="sapFioriListReportTable"
+        height="100%"
+        tableType="Table"
+        showRowCount="true"
+        showFullScreenButton="false"
+        useExportToExcel="true"
+        useTablePersonalisation="true"
+        showTablePersonalisation="false"
+        useVariantManagement="false"
+        enableAutoBinding="true"
+        beforeRebindTable="onBeforeRebindMapTable"
+        enableAutoColumnWidth="true"
+        entitySet="GRVCOA04"
+        initiallyVisibleFields="GLAccount,GLAccountName,FinancialStatementItem,FinancialStatementItemText,SystemMessageText"
+        requestAtLeastFields="GLAccount,GLAccountName,FinancialStatementItem,FinancialStatementItemText,SystemMessageText,HasError">
+
+        <smarttable:customToolbar>
+            <OverflowToolbar id="SectionMappingTableOverflowToolbar" design="Transparent">
+                <ToolbarSpacer id="SectionMappingTableOverflowToolbarSpacer" />
+                <Button
+                    id="pgdc0010.mapping.detail.btn.filter"
+                    text="{i18n>ErrorItemButtonText}"
+                    tooltip="{i18n>ErrorItemButtonText}"
+                    visible="{= ${ui>/editMode}  ${ui>/toggleFilterBtnVisible} }"
+                    press="onToolbarFilterPress" />
+                <Button
+                    id="pgdc0010.mapping.detail.btn.clearfilter"
+                    text="{i18n>DisplayAllButtonText}"
+                    tooltip="{i18n>DisplayAllButtonText}"
+                    visible="{= ${ui>/editMode !${ui>/toggleFilterBtnVisible} }"
+                    press="onToolbarClearFilterPress" />
+                <Button
+                    id="pgdc0010.mapping.detail.btn.delete"
+                    text="{i18n>DeleteButtonText}"
+                    tooltip="{i18n>DeleteButtonText}"
+                    visible="{= ${ui>/editMode} }"
+                    enabled="{ui>/deleteMapBtnEnabled}"
+                    press="cmd:Delete" />
+                <Button
+                    id="pgdc0010.mapping.detail.btn.add"
+                    icon="sap-icon://add"
+                    tooltip="{i18n>AssignButtonTooltipText}"
+                    visible="{= ${ui>/editMode} }"
+                    enabled="true"
+                    press="cmd:Create" />
+                <SearchField
+                    id="pgdc0010.mapping.detail.searchField"
+                    width="auto"
+                    search="onSectionMappingSearch">
+                    <layoutData>
+                        <OverflowToolbarLayoutData id="SectionMappingTableFragmentOverflowToolbarLayoutData" />
+                    </layoutData>
+                </SearchField>
+            </OverflowToolbar>
+        </smarttable:customToolbar>
+
+        <smarttable:layoutData>
+            <FlexItemData id="FlexItemData" growFactor="1" baseSize="0%" />
+        </smarttable:layoutData>
+
+        <table:Table
+            width="100%"
+            id="pgdc0010.table.mapping"
+            enableColumnReordering="false"
+            enableCustomFilter="false"
+            enableCellFilter="false"
+            threshold="100"
+            minAutoRowCount="18"
+            rowActionCount="1"
+            visibleRowCountMode="Auto">
+            
+            <table:plugins>
+                <plugins:MultiSelectionPlugin
+                    id="mappingTableSelectionPlugin"
+                    selectionChange="onMapRowSelectionChange"
+                    limit="100"
+                    enableNotification="true"
+                    selectionMode="None" />
+            </table:plugins>
+
+            <table:rowSettingsTemplate>
+                <table:RowSettings
+                    id="RowSettings"
+                    highlight="{path:'HasError',formatter:'.formatter.formatterRowStatus'}" />
+            </table:rowSettingsTemplate>
+
+            <table:Column
+                hAlign="Begin"
+                id="pgdc0010.table.mapping.column.GLAccount"
+                width="10rem"
+                tooltip="{/#GRVCOA04Type/Zracct/@sap:label}"
+                visible="true"
+                filterProperty="Zracct"
+                sortProperty="Zracct">
+                <Label
+                    id="pgdc0010.table.mapping.column.GLAccount.label"
+                    text="{/#GRVCOA04Type/Zracct/@sap:label}" />
+                <table:template>
+                    <smartField:SmartField
+                        id="pgdc0010.table.column.sf.GLAccount"
+                        editable="{ui>/editMode}"
+                        enabled="true"
+                        value="{Zracct}"
+                        showSuggestion="true"
+                        change="onMappingItemChange" />
+                </table:template>
+                <table:customData>
+                    <core:CustomData
+                        id="GLAccountCustomData"
+                        key="p13nData"
+                        value='{"columnKey": "Zracct", "leadingProperty": "Zracct", "columnIndex": "0"\}' />
+                </table:customData>
+            </table:Column>
+
+            <table:Column
+                hAlign="Begin"
+                id="pgdc0010.table.mapping.column.GLAccountName"
+                width="25rem"
+                tooltip="{/#GRVCOA04Type/ZracctTextLo/@sap:label}"
+                visible="true"
+                filterProperty="ZracctTextLo"
+                sortProperty="ZracctTextLo">
+                <Label
+                    id="pgdc0010.table.mapping.column.GLAccountName.label"
+                    text="{/#GRVCOA04Type/ZracctTextLo/@sap:label}" />
+                <table:template>
+                    <smartField:SmartField
+                        id="pgdc0010.table.column.sf.GLAccountName"
+                        editable="false"
+                        enabled="false"
+                        value="{ZracctTextLo}"
+                        change="onMappingItemChange" />
+                </table:template>
+                <table:customData>
+                    <core:CustomData
+                        id="GLAccountNameCustomData"
+                        key="p13nData"
+                        value='{"columnKey": "ZracctTextLo", "leadingProperty": "ZracctTextLo", "columnIndex": "1"}' />
+                </table:customData>
+            </table:Column>
+
+            <table:Column
+                hAlign="Begin"
+                id="pgdc0010.table.mapping.column.FinancialStatementItem"
+                width="10rem"
+                tooltip="{/#GRVCOA04Type/Ritclg/@sap:label}"
+                visible="true"
+                filterProperty="Ritclg"
+                sortProperty="Ritclg">
+                <Label
+                    id="pgdc0010.table.mapping.column.FinancialStatementItem.label"
+                    text="{/#GRVCOA04Type/Ritclg/@sap:label}" />
+                <table:template>
+                    <smartField:SmartField
+                        id="pgdc0010.table.column.sf.FinancialStatementItem"
+                        editable="{ui>/editMode}"
+                        enabled="true"
+                        value="{Ritclg}"
+                        showSuggestion="true"
+                        change="onMappingItemChange" />
+                </table:template>
+                <table:customData>
+                    <core:CustomData
+                        id="FinancialStatementItemCustomData"
+                        key="p13nData"
+                        value='{"columnKey": "Ritclg", "leadingProperty": "Ritclg", "columnIndex": "2"}' />
+                </table:customData>
+            </table:Column>
+
+            <table:Column
+                hAlign="Begin"
+                id="pgdc0010.table.mapping.column.FinancialStatementItemText"
+                width="25rem"
+                tooltip="{/#GRVCOA04Type/Rbunit/@sap:label}"
+                visible="true"
+                filterProperty="Rbunit"
+                sortProperty="Rbunit">
+                <Label
+                    id="pgdc0010.table.mapping.column.FinancialStatementItemText.label"
+                    text="{/#GRVCOA04Type/Rbunit/@sap:label}" />
+                <table:template>
+                    <smartField:SmartField
+                        id="pgdc0010.table.column.sf.FinancialStatementItemText"
+                        editable="false"
+                        enabled="false"
+                        value="{Rbunit}"
+                        change="onMappingItemChange" />
+                </table:template>
+                <table:customData>
+                    <core:CustomData
+                        id="FinancialStatementItemTextCustomData"
+                        key="p13nData"
+                        value='{"columnKey": "Rbunit", "leadingProperty": "Rbunit", "columnIndex": "3"}' />
+                </table:customData>
+            </table:Column>
+
+            <table:Column
+                hAlign="Begin"
+                id="pgdc0010.table.mapping.column.SystemMessageText"
+                width="15rem"
+                tooltip="{/#GRVCOA04Type/MappingId/@sap:label}"
+                visible="{= ${ui>/messageTextColumnVisible} }">
+                <Label
+                    id="pgdc0010.table.mapping.column.SystemMessageText.label"
+                    text="{/#GRVCOA04Type/MappingId/@sap:label}" />
+                <table:template>
+                    <smartField:SmartField
+                        id="pgdc0010.table.column.sf.SystemMessageText"
+                        editable="false"
+                        enabled="true"
+                        value="{MappingId}" />
+                </table:template>
+                <table:customData>
+                    <core:CustomData
+                        id="SystemMessageTextCustomData"
+                        key="p13nData"
+                        value='{"columnKey": "MappingId", "leadingProperty": "MappingId", "columnIndex": "4"}' />
+                </table:customData>
+            </table:Column>
+        </table:Table>
+    </smarttable:SmartTable>
+</core:FragmentDefinition>
