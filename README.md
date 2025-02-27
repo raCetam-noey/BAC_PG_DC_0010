@@ -40,3 +40,4 @@ Non-SAP 연결 단위 별로 GL 계정코드와 재무제표항목의 맵핑을 
 1. Active NodeJS LTS (Long Term Support) version and associated supported NPM version.  (See https://nodejs.org)
 
 
+# PG-DC-0010
