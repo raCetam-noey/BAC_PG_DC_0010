@@ -14,8 +14,8 @@ builder:
       afterTask: generateCachebusterInfo
       configuration:
         target:
-          destination: ZAM_DEV_SAML_ASSERTION
-          url: https://my407000-api.s4hana.cloud.sap
+          url: https://my407000.s4hana.cloud.sap
+          authenticationType: reentranceTicket 
         app:
           name: YUI5_PG_DC_0010
           description: ""

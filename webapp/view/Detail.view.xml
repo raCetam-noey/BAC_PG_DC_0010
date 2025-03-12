@@ -114,6 +114,7 @@
                                         class="sapFioriListReportTable"
                                         height="100%"
                                         tableType="Table"
+                                        editTogglable="false"
                                         showRowCount="true"
                                         showFullScreenButton="false"
                                         useTablePersonalisation="true"
@@ -130,14 +131,26 @@
                                         <smarttable:layoutData>
                                             <FlexItemData id="FlexItemData" growFactor="1" baseSize="0%" />
                                         </smarttable:layoutData>
-
+                                        <smarttable:customToolbar>
+                                            <OverflowToolbar id="mappingTableToolbar">
+                                                <ToolbarSpacer id="mappingTableToolbarSpacer" />
+                                                <Button 
+                                                    id="deleteButton"
+                                                    text="{i18n>DeleteButtonText}"
+                                                    tooltip="{i18n>DeleteButtonText}"
+                                                    icon="sap-icon://delete"
+                                                    enabled="{ui>/deleteMapBtnEnabled}"
+                                                    press="onDeleteSelectedRows"
+                                                    visible="{ui>/editMode}" />
+                                            </OverflowToolbar>
+                                        </smarttable:customToolbar>
                                         <table:Table
                                             width="100%"
                                             id="pgdc0010.table.mapping"
                                             enableColumnReordering="false"
                                             enableCustomFilter="false"
                                             enableCellFilter="false"
-                                            threshold="100"
+                                            threshold="1000"
                                             minAutoRowCount="18"
                                             rowActionCount="1"
                                             visibleRowCountMode="Auto">
@@ -171,8 +184,9 @@
                                                 <table:template>
                                                     <smartField:SmartField
                                                         id="pgdc0010.table.column.sf.ConsolidationCOA"
-                                                        editable="{ui>/editMode}"
-                                                        enabled="true"
+                                                        editable="false"
+                                                        enabled="false"
+                                                        showValueHelp="true"
                                                         value="{CnsldtnCOA}"
                                                         showSuggestion="true"
                                                         change="onMappingItemChange" />
@@ -224,7 +238,7 @@
                                                     <smartField:SmartField
                                                         id="pgdc0010.table.column.sf.MappingID"
                                                         editable="false"
-                                                        enabled="true"
+                                                        enabled="false"
                                                         value="{MappingID}" />
                                                 </table:template>
                                                 <table:customData>
@@ -249,8 +263,8 @@
                                                 <table:template>
                                                     <smartField:SmartField
                                                         id="pgdc0010.table.column.sf.Revision"
-                                                        editable="{ui>/editMode}"
-                                                        enabled="true"
+                                                        editable="false"
+                                                        enabled="false"
                                                         value="{Revision}"
                                                         showSuggestion="true"
                                                         change="onMappingItemChange" />
@@ -280,6 +294,7 @@
                                                         editable="false"
                                                         enabled="false"
                                                         value="{CnsldtnFSItem}"
+                                                        showValueHelp="true"
                                                         change="onMappingItemChange" />
                                                 </table:template>
                                                 <table:customData>
@@ -381,8 +396,8 @@
                                                 <table:template>
                                                     <smartField:SmartField
                                                         id="pgdc0010.table.column.sf.GLAccount"
-                                                        editable="false"
-                                                        enabled="false"
+                                                        editable="{ui>/editMode}"
+                                                        enabled="true"
                                                         value="{GLAccount}"
                                                         change="onMappingItemChange" />
                                                 </table:template>
@@ -407,8 +422,8 @@
                                                 <table:template>
                                                     <smartField:SmartField
                                                         id="pgdc0010.table.column.sf.GLAccountLocalText"
-                                                        editable="false"
-                                                        enabled="false"
+                                                        editable="{ui>/editMode}"
+                                                        enabled="true"
                                                         value="{GLAccountLocalText}"
                                                         change="onMappingItemChange" />
                                                 </table:template>
@@ -433,8 +448,8 @@
                                                 <table:template>
                                                     <smartField:SmartField
                                                         id="pgdc0010.table.column.sf.GLAccountGroupText"
-                                                        editable="false"
-                                                        enabled="false"
+                                                        editable="{ui>/editMode}"
+                                                        enabled="true"
                                                         value="{GLAccountGroupText}"
                                                         change="onMappingItemChange" />
                                                 </table:template>
@@ -460,9 +475,9 @@
                         <Button
                             id="pgdc0010.btn.save"
                             type="Emphasized"
-                            text="{i18n>SaveButtonText}"
-                            tooltip="{i18n>SaveButtonText}"
-                            press="cmd:Save"
+                            text="확인"
+                            tooltip="확인"
+                            press="onEditSave"
                             enabled="{UIModel>/editable}" />
                         <Button
                             id="pgdc0010.btn.cancel"

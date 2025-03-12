@@ -114,6 +114,35 @@ function (
             }
         },
 
+        onToolbarImportPress: function() {
+            this._oFullPage.setBusy(true);
+            // var p = e.getSource().getBindingContext().sPath;
+            var oModel = this.getView().getModel();
+            // var selectedData = oModel.getProperty(p);
+            // var sUuid = selectedData.Uuid
+            oModel.read("/GRVCOA02", {
+                success: function(d, r) {
+                    this._oFullPage.setBusy(false);
+                    this.getRouter().navTo("ExcelUpload", {
+                        objectId: "excelupload"  
+                    });
+                }.bind(this),
+                error: function(E) {
+                    this._oFullPage.setBusy(false);
+                    this.showErrorMessageBox(JSON.stringify(E));
+                }.bind(this)
+            });
+            // this.storeCurrentAppState();
+            // this.getRouter().navTo("ExcelUpload");
+
+            // var p = {};
+            // var o = function(e) {
+            //     sap.m.MessageBox.error(this.getResourceBundle().getText("OUTBOUND_NAV_ERROR"));
+            // }
+            // .bind(this);
+            // this._oNavigationHandler.navigate("ConsolidationFinanceSItem", "mappingImport", p, this.getCurrentAppState(), o);
+        },
+
         // onToolbarExportPress: function() {
         //     var d = this.getOwnerComponent().getModel();
         //     var m = d.getMetaModel().oMetadata;

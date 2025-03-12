@@ -57,12 +57,12 @@ height="100%">
                         <ToolbarSpacer id="overflowToolbarSpacer"/>
                         <Button id="pgdc0010.button.refresh" enabled="{ui>/refreshEnabled}" press="onToolbarRefreshPress" text="{i18n>RefreshButtonText}" tooltip="{i18n>RefreshButtonText}"/>
                         <Button id="pgdc0010.button.import" enabled="{ui>/importBtnEnabled}" press="onToolbarImportPress" text="{i18n>ImportButtonText}" tooltip="{i18n>ImportButtonText}"/>
-                        <Button id="pgdc0010.button.export" enabled="{ui>/exportBtnEnabled}" press="onToolbarExportWithSelectionPress" text="{i18n>ExportButtonText}" tooltip="{i18n>ExportButtonTooltipText}"/>
+                        <Button id="pgdc0010.button.export" enabled="{ui>/exportBtnEnabled}" press="onToolbarExportWithSelectionPress" text="{i18n>ExportButtonText}" tooltip="{i18n>ExportButtonTooltipText}" visible="false"/>
                         <Button id="pgdc0010.button.assign" enabled="{ui>/assignBtnEnabled}" press="onToolbarAssignPress" text="{i18n>AssignButtonText}" tooltip="{i18n>AssignButtonText}"/>
                         <Button id="pgdc0010.button.log" press="onToolbarShowLogPress" text="{i18n>LogButtonText}" tooltip="{i18n>LogButtonText}"/>
                         <Button id="pgdc0010.button.create.mapping" enabled="{ui>/createMappingBtnEnabled}" press="onToolbarCreateMappingPress" text="{i18n>CreateMappingButtonText}" tooltip="{i18n>CreateMappingButtonText}"/>
                         <Button id="pgdc0010.button.delete" enabled="{ui>/deleteBtnEnabled}" press="cmd:Delete" text="{i18n>DeleteButtonText}" tooltip="{i18n>DeleteButtonText}"/>
-                        <Button id="pgdc0010.button.duplicate" enabled="{ui>/duplicateBtnEnabled}" press="onToolbarDuplicatePress" text="{i18n>DuplicateButtonText}" tooltip="{i18n>DuplicateButtonText}"/>
+                        <Button id="pgdc0010.button.duplicate" enabled="{ui>/duplicateBtnEnabled}" press="onToolbarDuplicatePress" text="{i18n>DuplicateButtonText}" tooltip="{i18n>DuplicateButtonText}" visible="false"/>
                         <Button id="pgdc0010.button.create.revison" enabled="{ui>/createRevisionBtnEnabled}" press="onToolbarCreateRevisionPress" text="{i18n>CreateRevisionButtonText}" tooltip="{i18n>CreateRevisionButtonText}"/>
                         </OverflowToolbar>
                         </smarttable:customToolbar>
@@ -146,4 +146,3 @@ height="100%">
             </f:content>
     </f:DynamicPage>
 </mvc:View>
-
